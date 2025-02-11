@@ -1,0 +1,64 @@
+Polymorphism:
+
+Polymorphism is a key OOP principle that enables objects of different classes to be handled as instances of a common base class. It allows methods to behave differently based on the object. It exists in two types: compile-time (method overloading) and run-time (method overriding). It introduces functionality without changing existing code, and it enhances reusability and flexibility.
+
+Benefit of Polymorphism:
+
+One of the key advantages of polymorphism is that it makes code maintenance easier and improves scalability. Through polymorphism, new features can be incorporated using subclassing and method overriding without changing the current code framework. This increases the system's extensibility and maintainability. Polymorphism also allows for flexibility through the use of a common interface by different objects but acting differently depending on their respective class, thus making the program simpler to extend in the future.
+
+Polymorphism within the Eternal Quest program treats various kinds of goals (simple, eternal, checklist) in terms of a generic interface. There is a base class called Goal, and then there are subclasses like SimpleGoal, EternalGoal, and ChecklistGoal, which override methods wherever required. By so doing, we can simply implement creation, tracking, and displaying progress for various goal types without having distinct code for each type.
+
+Code Example:
+
+public class Goal
+{
+    public string Name { get; set; }
+    public int Points { get; set; }
+    
+    public virtual void RecordEvent()
+    {
+        Console.WriteLine("Recording event for general goal.");
+    }
+}
+
+public class SimpleGoal : Goal
+{
+    public override void RecordEvent()
+    {
+        Points += 100;
+        Console.WriteLine("Simple Goal completed! Points: " + Points);
+    }
+}
+
+public class EternalGoal : Goal
+{
+    public override void RecordEvent()
+    {
+        Points += 50;
+        Console.WriteLine("Eternal Goal recorded! Points: " + Points);
+    }
+}
+
+public class ChecklistGoal : Goal
+{
+    public int TimesCompleted { get; set; }
+    public int CompletionGoal { get; set; }
+    
+    public override void RecordEvent()
+    {
+        TimesCompleted++;
+        Points += 10;
+        if (TimesCompleted == CompletionGoal)
+        {
+            Points += 50;  // Bonus for completing the checklist goal
+            Console.WriteLine("Checklist Goal completed! Bonus points: " + Points);
+        }
+        else
+        {
+            Console.WriteLine($"Goal progress: {TimesCompleted}/{CompletionGoal}");
+        }
+    }
+}
+
+in this example from the Goal class hierarchy where polymorphism is achieved using method overriding:
+In this code, every subclass overrides the RecordEvent method in a manner appropriate to its unique behavior. SimpleGoal scores 100 points each time, and ChecklistGoal tracks the completions and pays a bonus when done in full. Polymorphism enables us to treat SimpleGoal, EternalGoal, and ChecklistGoal as Goal objects and call RecordEvent without knowing in advance what the concrete type is. This keeps the code flexible and easy to expand.
